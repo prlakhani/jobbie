@@ -19,8 +19,17 @@ class Company(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(80),nullable=False)
     # logo col has imgur id of image
-    logo = Column(Integer, default = 555555)
+    logo = Column(Integer, default = 5555555)
     locations = Column(ARRAY(Float))
+    hiring_email = Column(String, nullable = False)
+
+    @validates('hiring_email')
+    def validate_email(self, key, email):
+        assert '@' in email, "Invalid email address"
+        assert '.' in email && 
+        # assert that the index of the '.' is after the '@'...how?
+        return email
+
     # checkconstraint that each location is len 2
     # this should be a 2d array, lat/long are cols and ea loc is a row
     __table_args__ = (CheckConstraint('array_length(locations,1)=2'),)
@@ -35,6 +44,7 @@ class Job(Base):
     company_id = Column(Integer, ForeignKey('company.id'))
     company = relationship(Company)
     description = Column(Text, nullable=False)
+
     # Checkconstraint on location that it is len 2 in dim 1
     __table_args__ = (CheckConstraint('array_length(location,1)=2'),)
 

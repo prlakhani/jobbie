@@ -16,4 +16,6 @@ from bleach import clean
 
 app = Flask(__name__)
 
-
+if __name__ == '__main__':
+    app.secret_key = os.environ.get('FLASK_SECRET_KEY',
+        "\xb6\xc8\xbe\xec\xfb\xbf;\x10\xe99\xcc\xb3\x92M\x94\x0e\xc9\x18\xc4\x83\x1c\xb0\xf5x")
